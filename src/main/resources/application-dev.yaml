@@ -1,0 +1,32 @@
+application:
+    title: Api de Cadastro de Lojas
+    version: 1.0.0
+
+spring:
+    data:
+      mongodb:
+        database: dev-cadastro-lojas
+        uri: mongodb://admin:123456@mongo-db:27017/${spring.data.mongodb.database}?authSource=admin
+
+
+
+springdoc:
+    swagger-ui:
+        path: "/cadastroLoja/swagger-ui.html"
+
+feign:
+    client:
+        config:
+            frontend-controller-client:
+                follow-redirects: false
+            default:
+                loggerLevel: FULL
+
+viacep:
+    endpoint: "viacep.com.br/ws"
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"

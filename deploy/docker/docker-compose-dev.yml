@@ -1,0 +1,61 @@
+version: "3"
+
+services:
+  load-balance:
+    build:
+      context: ../nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - cadastro-network
+    depends_on:
+      - cadastro-loja-api
+      - cadastro-loja-api2
+
+  mongo-db:
+    container_name: mongo-db
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: "test"
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "123456"
+    ports:
+      - "27017:27017"
+    networks:
+      - cadastro-network
+    restart: always
+
+  cadastro-loja-api:
+    container_name: cadastro-loja-api
+    image: vinifontana/cadastroloja:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 8090
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "8181:8090"
+    depends_on:
+      - mongo-db
+    networks:
+      - cadastro-network
+    restart: always
+
+  cadastro-loja-api2:
+    container_name: cadastro-loja-api2
+    image: vinifontana/cadastroloja:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 8091
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "8282:8091"
+    depends_on:
+      - mongo-db
+    networks:
+      - cadastro-network
+    restart: always
+
+networks:
+    cadastro-network:
+        driver: bridge
