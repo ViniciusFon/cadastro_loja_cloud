@@ -35,6 +35,28 @@ services:
           memory: 700M
     restart: always
 
+  cadastro-loja-api2:
+    container_name: cadastro-loja-api
+    image: vinifontana/cadastroloja:latest
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SERVER_PORT: 8090
+      SERVER_NAME: Servidor_2
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "81:8090"
+    depends_on:
+      - mongo-db
+    networks:
+      - cadastro-network
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 700M
+    restart: always
+
 
 networks:
     cadastro-network:
