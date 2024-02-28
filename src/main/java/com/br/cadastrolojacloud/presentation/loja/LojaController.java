@@ -25,11 +25,14 @@ public class LojaController {
     private LojaInserirService lojaInserirService;
 
     @Value("${server.port}")
-    private String server;
+    private String serverPort;
+
+    @Value("${server.name}")
+    private String serverName;
 
     @GetMapping("/{id}")
     @Operation(summary = "Endpoint que retorna a loja por id")
-    public LojaBuscarResponse buscar(@PathVariable("id")String id) {
+    public LojaBuscarResponse buscar(@PathVariable("id") String id) {
 
         return lojaBuscarService.buscar(id);
 
@@ -37,7 +40,7 @@ public class LojaController {
 
     @GetMapping("/teste")
     public String teste(){
-        return server;
+        return serverName + ": " + serverPort ;
     }
 
     @GetMapping("/numero/{numero}/potencia/{potencia}")

@@ -8,8 +8,6 @@ spring:
         database: dev-cadastro-lojas
         uri: mongodb://admin:123456@mongo-db:27017/${spring.data.mongodb.database}?authSource=admin
 
-
-
 springdoc:
     swagger-ui:
         path: "/cadastroLoja/swagger-ui.html"
