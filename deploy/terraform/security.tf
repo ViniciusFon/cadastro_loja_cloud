@@ -1,34 +1,31 @@
+
 resource "aws_security_group" "loja_sg" {
   name        = "loja_sg"
-  description = "Loja Security Group"
-  vpc_id      = aws_vpc.loja_vpc.id
+  description = "loja security group"
+  vpc_id      = aws_vpc.loja_vpc_1.id
+
+  tags = {
+    "Name" = "loja_sg"
+  }
 }
 
-resource "aws_security_group_rule" "loja_sg_public_out" {
-  from_port         = 0
-  protocol          = "-1"
+resource "aws_security_group_rule" "public_out" {
+  type        = "egress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["0.0.0.0/0"]
+
   security_group_id = aws_security_group.loja_sg.id
-  to_port           = 0
-  type              = "egress"
-  cidr_blocks       = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "loja_sg_https_in" {
-  from_port         = 443
-  protocol          = "tcp"
-  security_group_id = aws_security_group.loja_sg.id
-  to_port           = 443
+resource "aws_security_group_rule" "public_in_ssh" {
   type              = "ingress"
-  cidr_blocks       = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group_rule" "loja_sg_ssh_in" {
   from_port         = 22
-  protocol          = "tcp"
-  security_group_id = aws_security_group.loja_sg.id
   to_port           = 22
-  type              = "ingress"
+  protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.loja_sg.id
 }
 
 resource "aws_key_pair" "loja_key" {
@@ -36,3 +33,11 @@ resource "aws_key_pair" "loja_key" {
   public_key = file("~/.ssh/loja_key.pub")
 }
 
+resource "aws_security_group_rule" "public_in_http" {
+  type              = "ingress"
+  from_port         = 80
+  to_port           = 80
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.loja_sg.id
+}
