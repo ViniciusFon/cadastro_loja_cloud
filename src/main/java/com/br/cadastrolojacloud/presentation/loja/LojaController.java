@@ -4,6 +4,7 @@ import com.br.cadastrolojacloud.application.loja.buscar.LojaBuscarService;
 import com.br.cadastrolojacloud.application.loja.buscar.response.LojaBuscarResponse;
 import com.br.cadastrolojacloud.application.loja.inserir.LojaInserirService;
 import com.br.cadastrolojacloud.application.loja.inserir.request.LojaInserirRequest;
+import com.br.cadastrolojacloud.application.loja.inserir.response.LojaInserirResponse;
 import com.br.cadastrolojacloud.domain.PotenciaEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.log4j.Log4j2;
@@ -61,9 +62,9 @@ public class LojaController {
 
     @PostMapping("/")
     @Operation(summary = "Endpoint que insere uma loja")
-    public void inserir(@RequestBody LojaInserirRequest request) {
+    public LojaInserirResponse inserir(@RequestBody LojaInserirRequest request) {
 
-         lojaInserirService.inserir(request);
+         return lojaInserirService.inserir(request);
 
     }
 
