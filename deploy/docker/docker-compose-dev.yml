@@ -1,18 +1,6 @@
 version: "3"
 
 services:
-  load-balance:
-    build:
-      context: ../nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    networks:
-      - cadastro-network
-    depends_on:
-      - cadastro-loja-api
-      - cadastro-loja-api2
-
   mongo-db:
     container_name: mongo-db
     image: mongo
@@ -32,6 +20,8 @@ services:
       SERVER_PORT: 8090
       SERVER_NAME: Servidor_1
       TZ: "America/Sao_Paulo"
+    ports:
+      - "8090:8090"
     depends_on:
       - mongo-db
     networks:
@@ -49,9 +39,11 @@ services:
     image: vinifontana/cadastroloja:latest
     environment:
       SPRING_PROFILES_ACTIVE: dev
-      SERVER_PORT: 8090
+      SERVER_PORT: 8091
       SERVER_NAME: Servidor_2
       TZ: "America/Sao_Paulo"
+    ports:
+        - "8091:8091"
     depends_on:
       - mongo-db
     networks:
