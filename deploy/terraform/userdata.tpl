@@ -28,7 +28,7 @@
 #clone your project from git repository
     git clone https://github.com/ViniciusFon/cadastro_loja_cloud.git
     cd cadastro_loja_cloud
-    git checkout simples
+    git checkout ssl_test
     git pull
     cd deploy/docker
 
